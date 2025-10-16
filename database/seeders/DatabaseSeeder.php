@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Feature;
+use App\Models\Package;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,6 +20,42 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+        ]);
+
+        Feature::create([
+            'image' => '../../public/assets/plus.svg',
+            'route_name' => 'feature1.index',
+            'name' => 'Calculate Sum',
+            'description' => 'Calculate sum of two numbers',
+            'required_credits' => 1,
+            'active' => true
+        ]);
+
+        Feature::create(attributes: [
+            'image' => '../../public/assets/plus.svg',
+            'route_name' => 'feature2.index',
+            'name' => 'Calculate Difference',
+            'description' => 'Calculate difference of two numbers',
+            'required_credits' => 3,
+            'active' => true
+        ]);
+
+        Package::create([
+            'name' => 'Basic',
+            'price' => 5,
+            'credits' => 20
+        ]);
+
+        Package::create([
+            'name' => 'Silver',
+            'price' => 20,
+            'credits' => 100
+        ]);
+
+        Package::create(attributes: [
+            'name' => 'Gold',
+            'price' => 50,
+            'credits' => 500
         ]);
     }
 }
