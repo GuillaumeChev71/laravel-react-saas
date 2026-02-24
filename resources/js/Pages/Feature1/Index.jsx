@@ -10,11 +10,26 @@ import { use } from "react";
 export default function Index({ feature, answer }) {
 
 
-    const {data, setData, post, processing, errors} = useForm({
-        number: '',
+    const { data, setData, post, processing, errors } = useForm({
+        number1: '',
+        number2: '',
     });
 
-    
+    const submit = (e) => {
+        e.preventDefault();
+        post(route('feature1.calculate'), {
+            onSuccess: () => {
+                reset();
+            }
+        });
+    }
 
+    return ( 
+
+        
+
+
+
+    );
 
 }
