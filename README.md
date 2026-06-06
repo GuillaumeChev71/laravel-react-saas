@@ -1,61 +1,198 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel React SaaS
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Application SaaS construite avec Laravel 11 et React (Inertia.js).
 
-## About Laravel
+## 📋 Table des matières
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Stack Technique](#stack-technique)
+- [Installation depuis zéro](#installation-depuis-zéro)
+- [Installation du projet existant](#installation-du-projet-existant)
+- [Configuration de la base de données](#configuration-de-la-base-de-données)
+- [Démarrage de l'application](#démarrage-de-lapplication)
+- [Commandes de développement](#commandes-de-développement)
+- [Ressources](#ressources)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🛠️ Stack Technique
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Backend**: Laravel 11
+- **Frontend**: React avec Inertia.js
+- **Authentification**: Laravel Breeze
+- **Base de données**: PostgreSQL
+- **Containerisation**: Docker
+- **Styling**: Tailwind CSS
+- **Icons**: [Feather Icons](https://feathericons.com/)
 
-## Learning Laravel
+## 🚀 Installation depuis zéro
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+> **Note**: Ces étapes sont uniquement nécessaires pour créer un nouveau projet. Si vous clonez ce projet existant, passez à la section [Installation du projet existant](#installation-du-projet-existant).
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 1. Créer le projet Laravel
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+composer create-project laravel/laravel laravel-react-saas
+cd laravel-react-saas
+```
 
-## Laravel Sponsors
+### 2. Installer Laravel Breeze
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+**Laravel Breeze** fournit une implémentation minimaliste de toutes les fonctionnalités d'authentification de Laravel (connexion, inscription, réinitialisation de mot de passe, etc.).
 
-### Premium Partners
+```bash
+composer require laravel/breeze --dev
+php artisan breeze:install
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Lors de l'installation de Breeze, sélectionnez **React** comme stack frontend et **Inertia** comme adaptateur.
 
-## Contributing
+## 📦 Installation du projet existant
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Si vous clonez ce projet, suivez ces étapes :
 
-## Code of Conduct
+### 1. Installer les dépendances
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+# Dépendances PHP
+composer install
 
-## Security Vulnerabilities
+# Dépendances JavaScript
+npm install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 2. Configuration de l'environnement
 
-## License
+Dupliquer le fichier `.env.example` et le renommer en `.env` :
+
+```bash
+cp .env.example .env
+```
+
+### 3. Générer la clé de l'application
+
+```bash
+php artisan key:generate
+```
+
+## 🗄️ Configuration de la base de données
+
+### 1. Configurer les variables d'environnement
+
+Dans le fichier `.env`, configurez les paramètres de connexion PostgreSQL :
+
+```php
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=laravel
+DB_USERNAME=laravel
+DB_PASSWORD=laravel
+```
+
+### 2. Démarrer PostgreSQL avec Docker
+
+Si vous n'avez pas encore lancé le conteneur Docker :
+
+```bash
+docker compose up -d postgres
+```
+
+### 3. Exécuter les migrations
+
+```bash
+php artisan migrate
+```
+
+Pour réinitialiser complètement la base de données et exécuter les seeders :
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+> **Note**: La commande `migrate:fresh` supprime toutes les tables et les recrée. L'option `--seed` exécute ensuite le `DatabaseSeeder` pour remplir la base avec des données initiales ou de test.
+
+## ▶️ Démarrage de l'application
+
+Vous devez lancer deux serveurs séparément :
+
+### Backend (Laravel)
+
+```bash
+php artisan serve
+```
+
+Le backend sera accessible sur `http://localhost:8000`
+
+### Frontend (Vite)
+
+```bash
+npm run dev
+```
+
+Le serveur de développement Vite compilera vos assets React.
+
+## 🔧 Commandes de développement
+
+### Créer un Model
+
+Les models représentent vos tables de base de données et permettent d'interagir avec elles via Eloquent ORM.
+
+```bash
+php artisan make:model NomModel -m
+```
+
+L'option `-m` crée automatiquement une migration associée au model.
+
+### Créer un Observer
+
+Un **Observer** est une classe qui permet d'observer les événements d'un modèle Eloquent et d'exécuter du code automatiquement quand ces événements se produisent.
+
+```bash
+php artisan make:observer UserObserver
+```
+
+**Utilité** : Un observer agit comme un écouteur (listener) pour les actions sur un modèle :
+- `created` - quand une entrée est créée
+- `updated` - quand une entrée est mise à jour
+- `deleted` - quand une entrée est supprimée
+- `restored` - quand une entrée supprimée est restaurée
+- `saved` - quand une entrée est enregistrée
+- etc.
+
+Cela permet de centraliser la logique liée à un modèle sans surcharger le modèle lui-même.
+
+### Créer un Controller
+
+Les controllers contiennent la logique de votre application (traitement des requêtes, validation, etc.).
+
+```bash
+php artisan make:controller Feature1Controller
+```
+
+### Créer une Resource
+
+Les Resources permettent de transformer vos modèles en format JSON pour les réponses API.
+
+```bash
+php artisan make:resource UserResource
+```
+
+### Database Seeder
+
+Le fichier `DatabaseSeeder` est le point central pour remplir votre base de données avec des données initiales ou de test. Il se trouve dans `database/seeders/DatabaseSeeder.php`.
+
+Pour exécuter les seeders :
+
+```bash
+php artisan db:seed
+```
+
+## 📚 Ressources
+
+- [Documentation Laravel](https://laravel.com/docs)
+- [Documentation Inertia.js](https://inertiajs.com/)
+- [Documentation React](https://react.dev/)
+- [Feather Icons](https://feathericons.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+
+## 📄 License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

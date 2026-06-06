@@ -30,10 +30,37 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
+                                <NavLink
+                                    href={route('feature1.index')}
+                                    active={route().current('feature1.index')}
+                                >
+                                    Feature 1
+                                </NavLink>
+                                <NavLink
+                                    href={route('feature2.index')}
+                                    active={route().current('feature2.index')}
+                                >
+                                    Feature 2
+                                </NavLink>
                             </div>
                         </div>
 
-                        <div className="hidden sm:ms-6 sm:flex sm:items-center">
+                        <div className="hidden sm:ms-6 sm:flex sm:items-center
+                        sm:ms-6 gap-3">
+                            <span className="text-white flex gap-3">
+                                <img
+                                    src="/assets/coin.png"
+                                    className="w-[20px]"
+                                    alt=""
+                                />
+                                {user.available_credits} Credits
+                            </span>
+                            <Link href="/"
+                            className="text-white py-1 px-3 rounded border 
+                            transition-colors 
+                            hover:text-gray-800 hover:bg-white">
+                                Get More
+                            </Link>
                             <div className="relative ms-3">
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -133,6 +160,18 @@ export default function AuthenticatedLayout({ header, children }) {
                             active={route().current('dashboard')}
                         >
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('feature1.index')}
+                            active={route().current('feature1.index')}
+                        >
+                            Feature 1
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('feature2.index')}
+                            active={route().current('feature2.index')}
+                        >
+                            Feature 2
                         </ResponsiveNavLink>
                     </div>
 
