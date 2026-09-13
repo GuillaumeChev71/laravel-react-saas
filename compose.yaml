@@ -19,8 +19,35 @@ services:
     networks:
       - app
 
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_saas_app
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: laravel
+      DB_USERNAME: laravel
+      DB_PASSWORD: laravel
+    volumes:
+      - ./:/var/www/html
+      - vendor:/var/www/html/vendor
+      - node_modules:/var/www/html/node_modules
+    networks:
+      - app
+
 volumes:
   pgdata:
+  vendor:
+  node_modules:
 
 networks:
   app:

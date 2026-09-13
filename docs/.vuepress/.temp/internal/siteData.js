@@ -1,0 +1,1 @@
+export const siteData = JSON.parse("{\"base\":\"/\",\"lang\":\"fr-FR\",\"title\":\"Laravel React SaaS\",\"description\":\"Documentation du projet Laravel React SaaS\",\"head\":[],\"locales\":{\"/\":{\"lang\":\"fr-FR\",\"title\":\"Laravel React SaaS\",\"description\":\"Documentation du projet Laravel React SaaS\"}}}")
