@@ -52,11 +52,11 @@ class Feature2Controller extends Controller
         UsedFeature::create([
             'user_id' => $user->id,
             'feature_id' => $this->feature->id,
-            'credits_used' => $this->feature->required_credits,
+            'credits' => $this->feature->required_credits,
             'data'=>$data
         ]);
 
-        return to_route('feature2.index')->with('answer', $number1 + $number2);
+        return to_route('feature2.index')->with('answer', $number1 - $number2);
 
     }
 }

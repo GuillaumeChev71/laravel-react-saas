@@ -52,7 +52,7 @@ class Feature1Controller extends Controller
         UsedFeature::create([
             'user_id' => $user->id,
             'feature_id' => $this->feature->id,
-            'credits_used' => $this->feature->required_credits,
+            'credits' => $this->feature->required_credits,
             'data'=>$data
         ]);
 

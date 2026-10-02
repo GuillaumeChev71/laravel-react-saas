@@ -11,6 +11,7 @@ class UsedFeature extends Model
         'credits',
         'user_id',
         'feature_id',
+        'data',
     ];
 
     // Casts les données en array
