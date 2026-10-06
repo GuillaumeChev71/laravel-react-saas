@@ -1,4 +1,4 @@
-.PHONY: help up up-build down logs sh rebuild install setup migrate fresh seed test build clean back front dev docs docs-install docs-build docs-clean
+.PHONY: help up up-build down logs sh rebuild install setup migrate fresh seed test build clean back front dev docs docs-install docs-build docs-clean audit audit-back audit-front format format-back format-front
 
 # Permet d'utiliser '>' au lieu d'une tabulation pour les recettes
 # (évite les problèmes de tabulations sous Windows / Git Bash).
@@ -83,6 +83,44 @@ front: ## [local] Lance uniquement le frontend (Vite HMR)
 
 dev: ## [local] Lance backend + frontend ensemble (composer dev)
 >$(COMPOSER) dev
+
+# ---- Audit des dépendances (local) ----
+
+audit: ## [local] Dépendances + vulnérabilités back (PHP) et front (JS)
+>@$(MAKE) --no-print-directory -k audit-back audit-front
+
+audit-back: ## [local] Dépendances et vulnérabilités du backend (Composer)
+>@echo "=== Dépendances directes backend (composer show) ==="
+>$(COMPOSER) show --direct
+>@echo ""
+>@echo "=== Vulnérabilités backend (composer audit) ==="
+>$(COMPOSER) audit
+
+audit-front: ## [local] Dépendances et vulnérabilités du frontend (npm)
+>@echo "=== Dépendances directes frontend (npm list) ==="
+>$(NPM) list --depth=0
+>@echo ""
+>@echo "=== Vulnérabilités frontend (npm audit) ==="
+>$(NPM) audit
+
+# ---- Formatage du code (local) ----
+
+# Pint : lance le wrapper .bat sous Windows (cmd.exe ne sait pas
+# exécuter le script shell vendor/bin/pint), le script normal ailleurs.
+ifeq ($(OS),Windows_NT)
+PINT = vendor\bin\pint.bat
+else
+PINT = vendor/bin/pint
+endif
+
+format: ## [local] Formate le backend (Pint) et le frontend (Prettier)
+>@$(MAKE) --no-print-directory -k format-back format-front
+
+format-back: ## [local] Formate le backend avec Pint
+>$(PINT)
+
+format-front: ## [local] Formate le frontend avec Prettier
+>$(NPM) run format
 
 # ---- Documentation VuePress (local) ----
 

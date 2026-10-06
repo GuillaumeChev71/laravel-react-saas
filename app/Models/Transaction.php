@@ -13,7 +13,7 @@ class Transaction extends Model
         'credits',
         'session_id',
         'user_id',
-        'package_id'
+        'package_id',
     ];
 
     // Relation avec l'utilisateur
@@ -21,5 +21,4 @@ class Transaction extends Model
     {
         return $this->belongsTo(User::class);
     }
-
 }

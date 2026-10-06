@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\FeatureResource;
 use App\Models\Feature;
 use App\Models\UsedFeature;
 use Illuminate\Http\Request;
-use App\Http\Resources\FeatureResource;
 
 class Feature1Controller extends Controller
 {
@@ -16,9 +16,9 @@ class Feature1Controller extends Controller
     // constructor function
     public function __construct()
     {
-        $this->feature = Feature::where("route_name", "feature1.index")
+        $this->feature = Feature::where('route_name', 'feature1.index')
             ->where('active', true)
-            ->firstOrFail(); //404 if not found
+            ->firstOrFail(); // 404 if not found
     }
 
     // inertia is used to render the view
@@ -27,15 +27,16 @@ class Feature1Controller extends Controller
 
         return inertia('Feature1/Index', [
             'feature' => new FeatureResource($this->feature),
-            'answer' => session('answer')
+            'answer' => session('answer'),
         ]);
     }
 
-    public function calculate(Request $request) {
+    public function calculate(Request $request)
+    {
 
         $user = $request->user();
 
-        if($user->available_credits < $this->feature->required_credits) {
+        if ($user->available_credits < $this->feature->required_credits) {
             return back();
         }
 
@@ -44,8 +45,8 @@ class Feature1Controller extends Controller
             'number2' => ['required', 'numeric'],
         ]);
 
-        $number1 =  (float) $data['number1'];
-        $number2 =  (float) $data['number2'];
+        $number1 = (float) $data['number1'];
+        $number2 = (float) $data['number2'];
 
         $user->decreaseCredits($this->feature->required_credits);
 
@@ -53,7 +54,7 @@ class Feature1Controller extends Controller
             'user_id' => $user->id,
             'feature_id' => $this->feature->id,
             'credits' => $this->feature->required_credits,
-            'data'=>$data
+            'data' => $data,
         ]);
 
         return to_route('feature1.index')->with('answer', $number1 + $number2);

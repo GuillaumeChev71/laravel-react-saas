@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->string('status');
-            $table->decimal('price',10,2);
+            $table->decimal('price', 10, 2);
             $table->integer('credits');
             $table->string('session_id');
             $table->foreignId('user_id')->constrained('users');

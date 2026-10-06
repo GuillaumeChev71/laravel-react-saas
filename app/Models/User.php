@@ -55,6 +55,7 @@ class User extends Authenticatable
     {
         $this->available_credits -= $credits;
         $this->save();
+
         return $this;
     }
 }

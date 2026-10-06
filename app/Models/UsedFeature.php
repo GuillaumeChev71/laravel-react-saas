@@ -15,7 +15,7 @@ class UsedFeature extends Model
     ];
 
     // Casts les données en array
-    protected function casts():array
+    protected function casts(): array
     {
         return [
             'data' => 'array',
@@ -31,6 +31,4 @@ class UsedFeature extends Model
     {
         return $this->belongsTo(Feature::class);
     }
-
-
 }

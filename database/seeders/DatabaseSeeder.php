@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use App\Models\Feature;
 use App\Models\Package;
+use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Calculate Sum',
             'description' => 'Calculate sum of two numbers',
             'required_credits' => 1,
-            'active' => true
+            'active' => true,
         ]);
 
         Feature::create(attributes: [
@@ -38,25 +38,25 @@ class DatabaseSeeder extends Seeder
             'name' => 'Calculate Difference',
             'description' => 'Calculate difference of two numbers',
             'required_credits' => 3,
-            'active' => true
+            'active' => true,
         ]);
 
         Package::create([
             'name' => 'Basic',
             'price' => 5,
-            'credits' => 20
+            'credits' => 20,
         ]);
 
         Package::create([
             'name' => 'Silver',
             'price' => 20,
-            'credits' => 100
+            'credits' => 100,
         ]);
 
         Package::create(attributes: [
             'name' => 'Gold',
             'price' => 50,
-            'credits' => 500
+            'credits' => 500,
         ]);
     }
 }
