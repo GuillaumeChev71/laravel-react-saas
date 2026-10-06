@@ -21,7 +21,30 @@ class CreditController extends Controller
 
     }
 
-    public function buyCredits(Package $package) {}
+    public function buyCredits(Package $package) {
+
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
+
+        $checkout_session = $stripe->checkout->sessions->create([
+            'line_items' => [
+                [
+                    'price_data' => [
+                        'currency' =>'usd',
+                        'product_data' => [
+                            'name' => $package->name . ' - ' .
+                            $package->credits . ' credits',
+                        ],
+                        'unit_amont' => $package->price * 100,
+                    ],
+                    'quantity' => 1,
+                ]
+            ],
+            'mode'=>'payment',
+            'success_url' => route('credit.success',[],true),
+            'cancel_url' => route('credit.cancel',[],true),
+        ]);
+
+    }
 
     public function success() {}
 
