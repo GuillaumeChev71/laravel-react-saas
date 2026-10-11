@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Package;
+use App\Models\Transaction;
 
 class CreditController extends Controller
 {
@@ -44,11 +45,35 @@ class CreditController extends Controller
             'cancel_url' => route('credit.cancel',[],true),
         ]);
 
+        Transaction::create([
+
+            'status'=>'pending',
+            'price'=>$package->price,
+            'credits'=>$package->credits,
+            'session_id'=>$checkout_session->id,
+            'user_id'=>Auth::id(),
+            'package_id'=>$package->id,
+        ]);
+
+        return redirect($checkout_session->url);
+
     }
 
-    public function success() {}
+    public function success() {
 
-    public function cancel() {}
+        return to_route('credit.index')->with('success','You have succesfully bought new credits.');
 
-    public function webhook() {}
+    }
+
+    public function cancel() {
+        return to_route('credit.index')->with('success','There was an error in payment process. Please try again.');
+    }
+
+    public function webhook() {
+
+        //This is your Stripe CLI webhook secret for testing your endpoint locally
+
+        $endpoint_secret="";
+
+    }
 }
