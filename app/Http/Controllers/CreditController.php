@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\FeatureResource;
+use App\Http\Resources\PackageResource;
 use App\Models\Package;
+use App\Models\Feature;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 
 class CreditController extends Controller
 {
@@ -102,12 +106,22 @@ class CreditController extends Controller
             case 'checkout.session.completed':
                 $session = $event->data->object;
 
+            $transaction = Transaction::where('session_id',
+            $session->id)->first();
+
+            if($transaction && $transaction->status ==='pending'){
+                $transaction->status = 'paid';
+                $transaction->save();
+                $transaction->user->avalaible_credits += $transaction->credits;
+                $transaction->user->save();
+            }
 
             //handle other types    
             default:
                 echo 'Received unknow event type ' . $event->type;
         }
 
+        return response('');
 
     }
 }
